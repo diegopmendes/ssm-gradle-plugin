@@ -2,10 +2,15 @@ plugins {
     id 'java'
     id 'java-gradle-plugin'
     id 'maven-publish'
+    id 'com.gradle.plugin-publish' version '0.18.0'
 }
 
-group 'com.amedigital'
-version "1.0.39"
+apply plugin: "java"
+apply plugin: "java-gradle-plugin"
+apply plugin: "maven-publish"
+
+group 'io.github.diegopmendes'
+version "1.0.0"
 
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
@@ -14,42 +19,37 @@ repositories {
     mavenCentral()
 }
 
-subprojects {
-    group "com.amedigital"
-    version "1.0.39"
+pluginBundle {
+    website = 'https://github.com/diegopmendes/ssm-gradle-plugin'
+    vcsUrl = 'https://github.com/diegopmendes/ssm-gradle-plugin.git'
+    tags = ['ssm', 'enviroments', 'aws plugin', 'plugins']
+}
 
-    apply plugin: "java"
-    apply plugin: "java-gradle-plugin"
-    apply plugin: "maven-publish"
-
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-
-    dependencies {
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-        testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.19.0'
-        testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.19.0'
-        implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
-    }
-
-    publishing {
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/AmeDigital/${rootProject.name}")
-                credentials {
-                    username = project.GITHUB_USER
-                    password = project.GITHUB_TOKEN
-                }
-            }
+gradlePlugin {
+    plugins {
+        importEnvironments {
+            id = 'io.github.diegopmendes.ssmgradle'
+            implementationClass = 'io.github.diegopmendes.ssmgradle.AwsEnvironmentsPlugin'
+            displayName = 'Aws SSM Environments'
+            description = 'Plugin responsible for retrieving a list of Parameter Store and setting the system\'s local environments'
         }
     }
-
-    test {
-        useJUnitPlatform()
-    }
 }
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.19.0'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.19.0'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+    implementation group: 'software.amazon.awssdk', name: 'ssm', version: '2.17.165'
+    testImplementation group: 'software.amazon.awssdk', name: 'ssm', version: '2.17.165'
+}
+
+test {
+    useJUnitPlatform()
+}
+
 
 
 

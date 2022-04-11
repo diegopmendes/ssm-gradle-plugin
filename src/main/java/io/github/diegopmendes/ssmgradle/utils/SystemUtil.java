@@ -1,4 +1,4 @@
-package com.ssmgradle.utils;
+package io.github.diegopmendes.ssmgradle.utils;
 
 import java.lang.reflect.Field;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.ssmgradle.utils;
+package io.github.diegopmendes.ssmgradle.utils;
 
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.services.ssm.SsmClient;

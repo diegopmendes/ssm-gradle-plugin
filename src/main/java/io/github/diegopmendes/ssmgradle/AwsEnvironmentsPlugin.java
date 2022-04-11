@@ -1,4 +1,4 @@
-package com.ssmgradle;
+package io.github.diegopmendes.ssmgradle;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;

@@ -1,6 +1,6 @@
-package com.ssmgradle;
+package io.github.diegopmendes.ssmgradle;
 
-import com.ssmgradle.actions.EnvironmentsAction;
+import io.github.diegopmendes.ssmgradle.actions.EnvironmentsAction;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;

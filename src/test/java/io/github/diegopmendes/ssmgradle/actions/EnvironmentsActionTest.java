@@ -1,4 +1,4 @@
-package com.ssmgradle.actions;
+package io.github.diegopmendes.ssmgradle.actions;
 
 import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;

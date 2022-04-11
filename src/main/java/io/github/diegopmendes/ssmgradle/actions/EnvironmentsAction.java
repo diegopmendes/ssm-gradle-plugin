@@ -1,12 +1,11 @@
-package com.ssmgradle.actions;
+package io.github.diegopmendes.ssmgradle.actions;
 
-import com.ssmgradle.utils.SsmUtil;
-import com.ssmgradle.utils.SystemUtil;
+import io.github.diegopmendes.ssmgradle.utils.SsmUtil;
+import io.github.diegopmendes.ssmgradle.utils.SystemUtil;
 
 import java.util.Map;
 
 public class EnvironmentsAction {
-
     public static void execute(final String awsProfile, final Map<String, String> environmentsParameterNames) {
         try {
             for (String awsEnvironmentKey : environmentsParameterNames.keySet()) {
