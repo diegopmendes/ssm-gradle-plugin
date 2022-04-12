@@ -15,7 +15,7 @@ public class AwsEnvironmentsPlugin implements Plugin<Project> {
 
         project.getTasks().named("compileJava", task -> {
             task.dependsOn(CI_NAME);
-            System.out.println("Task :COMPILE_JAVA NOVO 2 executed.");
+            System.out.println("Task :COMPILE_JAVA executed.");
         });
 
         project.getTasks().named("prepareKotlinBuildScriptModel", task -> {

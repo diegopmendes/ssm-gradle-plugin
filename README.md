@@ -14,7 +14,7 @@ Projeto responsável por recuperar variáveis do parameter store e setar como `e
  }
  ```
 
-* 2 - Acrescentar no settings.gradle
+* 2 - Acrescentar no settings.gradle e do projeto que irá importar
 
 ```
 pluginManagement {

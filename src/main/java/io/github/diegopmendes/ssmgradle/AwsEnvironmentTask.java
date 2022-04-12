@@ -36,15 +36,15 @@ abstract public class AwsEnvironmentTask extends DefaultTask {
 
         if (!getAwsProfile().isPresent()) {
             EnvironmentsAction.execute(DEFAULT_PROFILE, environments);
-            System.out.println("Profile used: " + DEFAULT_PROFILE);
+            System.out.println("Profile used ESSE: " + DEFAULT_PROFILE);
         } else {
             EnvironmentsAction.execute(getAwsProfile().get(), environments);
-            System.out.println("Profile used: " + getAwsProfile().get());
+            System.out.println("Profile used ESSE: " + getAwsProfile().get());
         }
-        setSystemEnvs(pluginExtension);
+        setEnvironmentsSystem(pluginExtension);
     }
 
-    private void setSystemEnvs(final PluginExtension extension) {
+    private void setEnvironmentsSystem(final PluginExtension extension) {
         List<Map<String, String>> repositoriesConfig = extension.getRepositories().getOrElse(List.of());
         for (Map<String, String> repositoryConfig : repositoriesConfig) {
             RepositoryHandler repositories = getProject().getRepositories();

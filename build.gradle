@@ -10,7 +10,7 @@ apply plugin: "java-gradle-plugin"
 apply plugin: "maven-publish"
 
 group 'io.github.diegopmendes'
-version "v1.0.0"
+version "1.0.0"
 
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
