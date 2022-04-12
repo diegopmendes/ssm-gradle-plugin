@@ -91,3 +91,6 @@ dependencies{
 ```bash
 ./gradlew clean build
 ```
+
+### Deseja Contribuir?
+- Envia um email para `diegu.jc@gmail.com` com assunto [SSM-GRADLE-PLUGIN]
