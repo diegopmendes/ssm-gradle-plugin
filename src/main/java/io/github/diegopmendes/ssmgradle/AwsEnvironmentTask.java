@@ -2,6 +2,7 @@ package io.github.diegopmendes.ssmgradle;
 
 import io.github.diegopmendes.ssmgradle.actions.EnvironmentsAction;
 import org.gradle.api.DefaultTask;
+import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
@@ -9,7 +10,11 @@ import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import static io.github.diegopmendes.ssmgradle.AwsEnvironmentsPlugin.PLUGIN_EXTENSION_NAME;
 
 abstract public class AwsEnvironmentTask extends DefaultTask {
 
@@ -26,13 +31,31 @@ abstract public class AwsEnvironmentTask extends DefaultTask {
 
     @TaskAction
     public void execute() {
+        PluginExtension pluginExtension = (PluginExtension) getProject().getExtensions().findByName(PLUGIN_EXTENSION_NAME);
+        Map<String, String> environments = pluginExtension.getEnvironmentsNames().getOrElse(Map.of());
+
         if (!getAwsProfile().isPresent()) {
-            EnvironmentsAction.execute(DEFAULT_PROFILE, getEnvironmentsNames().get());
+            EnvironmentsAction.execute(DEFAULT_PROFILE, environments);
             System.out.println("Profile used: " + DEFAULT_PROFILE);
         } else {
-            getAwsProfile().get();
-            EnvironmentsAction.execute(getAwsProfile().get(), getEnvironmentsNames().get());
+            EnvironmentsAction.execute(getAwsProfile().get(), environments);
             System.out.println("Profile used: " + getAwsProfile().get());
+        }
+        setSystemEnvs(pluginExtension);
+    }
+
+    private void setSystemEnvs(final PluginExtension extension) {
+        List<Map<String, String>> repositoriesConfig = extension.getRepositories().getOrElse(List.of());
+        for (Map<String, String> repositoryConfig : repositoriesConfig) {
+            RepositoryHandler repositories = getProject().getRepositories();
+            repositories.add(repositories.maven(repo -> {
+                repo.credentials(passwordCredentials -> {
+                    passwordCredentials.setUsername(System.getenv(repositoryConfig.get("username")));
+                    passwordCredentials.setPassword(System.getenv(repositoryConfig.get("password")));
+                });
+                repo.setName(repositoryConfig.get("name"));
+                repo.setUrl(repositoryConfig.get("url"));
+            }));
         }
     }
 }
